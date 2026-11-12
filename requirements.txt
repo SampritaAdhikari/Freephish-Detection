@@ -1,0 +1,13 @@
+numpy
+pandas
+pyarrow
+scikit-learn
+xgboost
+lightgbm
+joblib
+requests
+beautifulsoup4
+pillow
+huggingface_hub
+# optional: URLNet-style baseline (--table2)
+# torch
