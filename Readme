@@ -1,0 +1,38 @@
+FreePhish Detection — Enhanced Features, GAN Adversarial Evaluation, and DE Feature Weighting
+
+Re-implementation and extension of FreePhish (Saha Roy et al., 2023), a phishing-detection system targeting pages hosted on Free Website Building (FWB) services. This project extends the original 22-feature StackModel with a richer feature set, evaluates its robustness against a GAN-based adversarial attack, and explores Differential Evolution (DE) as an alternative feature-weighting approach.
+
+See samplepaper.tex (or the compiled PDF) for the full write-up: literature review, methodology, and experimental results.
+
+What's in this repo
+Scripts
+File	Purpose
+freephish_old.py	Baseline: trains the original 22-feature StackModel (train), compares two result files (compare), and runs live classification (monitor, analyze).
+freephish_enhanced.py	Trains the enhanced StackModel on a 100-feature set (URL, HTML, FWB-specific, brand, behavioral) (train).
+freephish_gan.py	GAN-based adversarial evaluation: generates adversarial phishing pages and evaluates both models under attack (adv), retrains the enhanced model on GAN-augmented data (retrain), and tunes the attack budget/epochs via grid search before retraining (tune).
+freephish_de.py	Differential Evolution search over per-feature weights on the enhanced feature space (train).
+freephish_classify_all.py	Loads any subset of the four trained models and classifies a shared list of live URLs with each one side by side — no training, inference only.
+requirements.txt	Python dependencies.
+Notebooks (Google Colab)
+File	Purpose
+FreePhish_pipeline_complete.ipynb	Full training pipeline: downloads the dataset, trains the baseline and enhanced models, runs the GAN attack/adversarial-training experiments, runs DE, and downloads all four trained .joblib model files. Run this once beforehand — not during a live demo.
+freephish_classify_all_colab.ipynb	The live demo notebook: upload the four trained models, fetch a handful of real phishing/benign URLs, and classify them side by side. Inference only, runs in seconds.
+Trained models (if included)
+
+model.joblib (baseline), model_enh.joblib (enhanced), model_adv.joblib (adversarially-trained enhanced), model_de.joblib (DE-weighted enhanced).
+
+How to reproduce
+Open FreePhish_pipeline_complete.ipynb in Google Colab.
+Upload the five .py scripts and requirements.txt when prompted.
+Run all cells top to bottom. This downloads the dataset, trains all four models, and ends by downloading the four .joblib files to your computer.
+How to run the live demo
+Open freephish_classify_all_colab.ipynb in Google Colab.
+Upload the five .py scripts and the four .joblib model files from the step above.
+Run all cells. It fetches a set of real phishing (PhishTank) and benign (GitHub Pages) URLs, classifies them with every model you uploaded, and prints a side-by-side comparison table.
+Dataset
+
+Sampled from the phreshphish dataset. Not included in this repo — re-download it using the download command in freephish_old.py if you need to retrain from scratch.
+
+Author
+
+Samprita Adhikari — Department of Computer Science and Engineering, Indian Institute of Technology Kharagpur.
